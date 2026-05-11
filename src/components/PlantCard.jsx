@@ -1,6 +1,7 @@
 import React from "react";
 
 function PlantCard() {
+  const [isSoldOut, setIsSoldOut] = useState(false)
   return (
     <li className="card" data-testid="plant-item">
       <img src={"https://via.placeholder.com/400"} alt={"plant name"} />
