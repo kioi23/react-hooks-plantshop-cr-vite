@@ -1,44 +1,41 @@
-import { useEffect, useState } from "react"
-import Header from "./components/Header"
-import Search from "./components/Search"
-import PlantList from "./components/PlantList"
-import NewPlantForm from "./components/NewPlantForm"
+import { useState, useEffect } from "react";
+import PlantCard from "./PlantCard";
+import NewPlantForm from "./NewPlantForm";
+import Search from "./Search";
 
 function App() {
-  // Stores all plants from backend
-  const [plants, setPlants] = useState([])
+  const [plants, setPlants] = useState([]);
+  const [searchQuery, setSearchQuery] = useState("");
 
-  // Stores user search input
-  const [search, setSearch] = useState("")
-
-  // Fetch plants when page loads
+  // ✅ Fetch plants on page load
   useEffect(() => {
     fetch("http://localhost:6001/plants")
-      .then((response) => response.json())
-      .then((data) => setPlants(data))
-  }, [])
+      .then(res => res.json())
+      .then(data => setPlants(data));
+  }, []);
 
-  // Adds new plant into state
+  // ✅ Filter plants by search input
+  const filteredPlants = plants.filter(plant =>
+    plant.name.toLowerCase().includes(searchQuery.toLowerCase())
+  );
+
+  // ✅ Add new plant to state after POST
   function handleAddPlant(newPlant) {
-    setPlants([...plants, newPlant])
+    setPlants([...plants, newPlant]);
   }
 
-  // Filters plants using search input
-  const filteredPlants = plants.filter((plant) =>
-    plant.name.toLowerCase().includes(search.toLowerCase())
-  )
-
   return (
-    <main>
-      <Header />
-
+    <div>
+      <h1>🌱 Plant Shop</h1>
+      <Search searchQuery={searchQuery} setSearchQuery={setSearchQuery} />
       <NewPlantForm onAddPlant={handleAddPlant} />
-
-      <Search search={search} setSearch={setSearch} />
-
-      <PlantList plants={filteredPlants} />
-    </main>
-  )
+      <div className="plant-list">
+        {filteredPlants.map(plant => (
+          <PlantCard key={plant.id} plant={plant} />
+        ))}
+      </div>
+    </div>
+  );
 }
 
-export default App
+export default App;
