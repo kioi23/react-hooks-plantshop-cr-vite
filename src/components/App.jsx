@@ -5,6 +5,8 @@ import { useState, useEffect } from "react";
 
 
 function App() {
+  const [plants, setPlants] = useState([])
+  
   return (
     <div className="app">
       <Header />
