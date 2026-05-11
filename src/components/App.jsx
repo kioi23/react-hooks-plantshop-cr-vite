@@ -14,5 +14,9 @@ function App() {
     </div>
   );
 }
+function handleAddPlant(newPlant) {
+  setPlants([...plants, newPlant])
+}
+<NewPlantForm onAddPlant={handleAddPlant} />
 
 export default App;
