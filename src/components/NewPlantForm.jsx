@@ -10,8 +10,12 @@ function NewPlantForm() {
         <input type="number" name="price" step="0.01" placeholder="Price" />
         <button type="submit">Add Plant</button>
       </form>
+      const [name, setName] = useState("")
+      const [image, setImage] = useState("")
+      const [price, setPrice] = useState("")
     </div>
   );
 }
+
 
 export default NewPlantForm;
